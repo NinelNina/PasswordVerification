@@ -9,7 +9,7 @@ namespace PasswordVerification
         {
             Verification verification = new Verification();
 
-            string password = "1S'ыф";
+            string password = "1М'mx";
             int minimum = 5;
 
             bool isPasswordVerificated = verification.IsVerificated(password, minimum);
@@ -97,20 +97,16 @@ namespace PasswordVerification
         }
         private bool IncludeAnotherAlphabet(string password)
         {
-            bool isRus = false;
-            bool isLatin = false;
+            bool includeRusAndLatin = false;
+            Regex latLetters = new Regex(@"[a-zA-Z]");
+            Regex rusLetters = new Regex(@"[а-яА-Я]");
             
-            if (Regex.IsMatch(password, @"\p{IsCyrillic}"))
+            if (latLetters.IsMatch(password) && rusLetters.IsMatch(password))
             {
-                isRus = true;
+                includeRusAndLatin = true;
             }            
             
-            if (Regex.IsMatch(password, @"\p{IsBasicLatin}"))
-            {
-                isLatin = true;
-            }
-
-            if (isRus && isLatin)
+            if (includeRusAndLatin)
             {
                 return true;
             }
